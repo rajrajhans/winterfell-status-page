@@ -41,3 +41,13 @@ export interface Settings {
 }
 
 export type FetchHandler = Required<ExportedHandler<Env>>['fetch']
+
+declare global {
+  interface Env {
+    KV_STORE: KVNamespace
+    SECRET_TELEGRAM_API_TOKEN?: string
+    SECRET_TELEGRAM_CHAT_ID?: string
+    SECRET_SLACK_WEBHOOK_URL?: string
+    SECRET_DISCORD_WEBHOOK_URL?: string
+  }
+}

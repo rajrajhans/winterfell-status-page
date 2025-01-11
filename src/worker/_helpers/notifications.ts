@@ -137,28 +137,28 @@ export async function notifyDiscord(monitor: Monitor, options: INotifyDiscordOpt
   })
 }
 
-export function getNotificationCount() {
+export function getNotificationCount(env: Env) {
   return [
-    typeof SECRET_SLACK_WEBHOOK_URL === 'undefined',
-    typeof SECRET_TELEGRAM_CHAT_ID === 'undefined' || typeof SECRET_TELEGRAM_API_TOKEN === 'undefined',
-    typeof SECRET_DISCORD_WEBHOOK_URL === 'undefined',
+    typeof env.SECRET_SLACK_WEBHOOK_URL === 'undefined',
+    typeof env.SECRET_TELEGRAM_CHAT_ID === 'undefined' || typeof env.SECRET_TELEGRAM_API_TOKEN === 'undefined',
+    typeof env.SECRET_DISCORD_WEBHOOK_URL === 'undefined',
   ].filter((item) => !item).length
 }
 
-export function getNotifications(monitor: Monitor, data: NotifyCoreData, afterFetch?: () => void) {
+export function getNotifications(monitor: Monitor, data: NotifyCoreData, env: Env, afterFetch?: () => void) {
   return [
     async () => {
       console.log('Checking Telegram notification configuration...')
-      console.log('SECRET_TELEGRAM_CHAT_ID:', typeof SECRET_TELEGRAM_CHAT_ID, SECRET_TELEGRAM_CHAT_ID ? 'exists' : 'undefined')
-      console.log('SECRET_TELEGRAM_API_TOKEN:', typeof SECRET_TELEGRAM_API_TOKEN, SECRET_TELEGRAM_API_TOKEN ? 'exists' : 'undefined')
+      console.log('SECRET_TELEGRAM_CHAT_ID:', typeof env.SECRET_TELEGRAM_CHAT_ID, env.SECRET_TELEGRAM_CHAT_ID ? 'exists' : 'undefined')
+      console.log('SECRET_TELEGRAM_API_TOKEN:', typeof env.SECRET_TELEGRAM_API_TOKEN, env.SECRET_TELEGRAM_API_TOKEN ? 'exists' : 'undefined')
 
-      if (typeof SECRET_TELEGRAM_CHAT_ID === 'undefined' || typeof SECRET_TELEGRAM_API_TOKEN === 'undefined') {
+      if (typeof env.SECRET_TELEGRAM_CHAT_ID === 'undefined' || typeof env.SECRET_TELEGRAM_API_TOKEN === 'undefined') {
         console.log('Telegram notification not configured - missing secrets')
         return
       }
       await notifyTelegram(monitor, {
-        chatId: SECRET_TELEGRAM_CHAT_ID,
-        apiToken: SECRET_TELEGRAM_API_TOKEN,
+        chatId: env.SECRET_TELEGRAM_CHAT_ID,
+        apiToken: env.SECRET_TELEGRAM_API_TOKEN,
         data,
       })
       afterFetch?.()

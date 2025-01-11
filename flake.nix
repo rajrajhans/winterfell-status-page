@@ -27,6 +27,7 @@
             pkgs.python39
             pkgs.cmake
             pkgs.pnpm
+            pkgs.wrangler
           ] else [ ];
 
         all = common ++ dev;

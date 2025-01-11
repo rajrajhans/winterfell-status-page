@@ -24,7 +24,7 @@ export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
   subrequests.required(2)
 
   for (const monitor of uncheckMonitors) {
-    const notificationCount = getNotificationCount()
+    const notificationCount = getNotificationCount(env)
     const restSubrequestCount = (config.settings.subrequestsLimit || defaultSubrequestsLimit) - subrequests.total
     const monitorMaxRequiredSubrequestCount = 1 + notificationCount
 
@@ -58,7 +58,7 @@ export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
         status: checkResponse.status,
         statusText: checkResponse.statusText,
         operational: monitorOperational,
-      }, () => {
+      }, env, () => {
         subrequests.notified()
       })
       ctx.waitUntil(Promise.allSettled(notifications.map((item) => item())))
