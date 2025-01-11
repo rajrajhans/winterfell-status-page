@@ -10,8 +10,8 @@ export const config: Config = {
   monitors: [
     {
       id: 'winterfell',
-      name: 'Ping service running on the Winterfell cluster\'s master node',
-      description: 'Ping service running on the Winterfell cluster',
+      name: 'winterfell-ping',
+      description: 'Ping service running on the Winterfell cluster\'s master node',
       url: 'https://winterfell.rajrajhans.com',
       method: 'GET',
       expectStatus: 200,
@@ -19,8 +19,8 @@ export const config: Config = {
     },
     {
       id: 'audiobookshelf',
-      name: 'Self hosted Audiobookshelf on the Winterfell cluster',
-      description: 'Audiobookshelf',
+      name: 'audiobookshelf',
+      description: 'Self hosted Audiobookshelf on the Winterfell cluster',
       url: 'https://audiobookshelf.rajrajhans.com',
       method: 'GET',
       expectStatus: 200,

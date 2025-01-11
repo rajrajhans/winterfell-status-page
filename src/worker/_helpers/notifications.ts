@@ -48,7 +48,7 @@ export async function notifySlack(monitor: Monitor, options: NotifySlackOptions)
                 type: 'mrkdwn',
                 text: `${data.operational ? ':white_check_mark:' : ':x:'} \`${
                   monitor.method ? monitor.method : 'GET'
-                } ${monitor.url}\` - :eyes: <${
+                } ${monitor.url}\`\n:eyes: <${
                   config.settings.url
                 }|Status Page>`,
               },
