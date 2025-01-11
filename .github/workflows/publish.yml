@@ -43,6 +43,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Generate wrangler.toml for production
+        run: |
+          sed -i.bak \
+            -e "s/\${CLOUDFLARE_ACCOUNT_ID}/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/g" \
+            -e "s/\${CLOUDFLARE_KV_NAMESPACE_ID}/${{ secrets.CLOUDFLARE_KV_NAMESPACE_ID }}/g" \
+            wrangler.toml
+
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
@@ -55,5 +62,3 @@ jobs:
         env:
           SECRET_TELEGRAM_API_TOKEN: ${{ secrets.SECRET_TELEGRAM_API_TOKEN }}
           SECRET_TELEGRAM_CHAT_ID: ${{ secrets.SECRET_TELEGRAM_CHAT_ID }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_KV_NAMESPACE_ID: ${{ secrets.CLOUDFLARE_KV_NAMESPACE_ID }}

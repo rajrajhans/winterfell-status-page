@@ -1,3 +1,4 @@
+# These placeholder values will be replaced during CI/CD
 account_id = "${CLOUDFLARE_ACCOUNT_ID}"
 name = "cf-worker-status-page-pro"
 main = "./src/worker/index.ts"
@@ -13,6 +14,7 @@ bucket = "./dist/client"
 port = 3000
 
 [env.production]
+name = "cf-worker-status-page-pro"
 kv_namespaces = [ { binding = "KV_STORE", id = "${CLOUDFLARE_KV_NAMESPACE_ID}" } ]
 
 [env.production.triggers]
