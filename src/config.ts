@@ -26,5 +26,14 @@ export const config: Config = {
       expectStatus: 200,
       followRedirect: true,
     },
+    {
+      id: 'safierinx.xyz',
+      name: 'safierinx.xyz',
+      description: 'Apoorv\'s website',
+      url: 'https://www.safierinx.xyz/',
+      method: 'GET',
+      expectStatus: 200,
+      followRedirect: true,
+    },
   ],
 }
