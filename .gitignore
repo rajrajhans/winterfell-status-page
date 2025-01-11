@@ -2,3 +2,7 @@
 /dist/
 .wrangler
 src/worker/static-assets/public.ts
+.DS_Store
+.direnv/
+.env.local
+.env.*.local
