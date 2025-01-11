@@ -4,8 +4,7 @@ main = "./src/worker/index.ts"
 compatibility_flags = [ "streams_enable_constructors" ]
 compatibility_date = "2021-09-29"
 workers_dev = true
-# npx --no -- wrangler kv:namespace create cf-worker-status-page-pro
-kv_namespaces = [ { binding = "cf_worker_status_page_pro", id = "${CLOUDFLARE_KV_NAMESPACE_ID}" } ]
+kv_namespaces = [ { binding = "KV_STORE", id = "${CLOUDFLARE_KV_NAMESPACE_ID}" } ]
 
 [site]
 bucket = "./dist/client"
@@ -14,7 +13,7 @@ bucket = "./dist/client"
 port = 3000
 
 [env.production]
-kv_namespaces = [ { binding = "cf_worker_status_page_pro", id = "${CLOUDFLARE_KV_NAMESPACE_ID}" } ]
+kv_namespaces = [ { binding = "KV_STORE", id = "${CLOUDFLARE_KV_NAMESPACE_ID}" } ]
 
 [env.production.triggers]
 crons = [
