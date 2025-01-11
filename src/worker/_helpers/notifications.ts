@@ -148,8 +148,12 @@ export function getNotificationCount() {
 export function getNotifications(monitor: Monitor, data: NotifyCoreData, afterFetch?: () => void) {
   return [
     async () => {
+      console.log('Checking Telegram notification configuration...')
+      console.log('SECRET_TELEGRAM_CHAT_ID:', typeof SECRET_TELEGRAM_CHAT_ID, SECRET_TELEGRAM_CHAT_ID ? 'exists' : 'undefined')
+      console.log('SECRET_TELEGRAM_API_TOKEN:', typeof SECRET_TELEGRAM_API_TOKEN, SECRET_TELEGRAM_API_TOKEN ? 'exists' : 'undefined')
+
       if (typeof SECRET_TELEGRAM_CHAT_ID === 'undefined' || typeof SECRET_TELEGRAM_API_TOKEN === 'undefined') {
-        console.log('Telegram notification not configured')
+        console.log('Telegram notification not configured - missing secrets')
         return
       }
       await notifyTelegram(monitor, {
