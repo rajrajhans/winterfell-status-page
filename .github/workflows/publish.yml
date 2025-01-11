@@ -49,6 +49,9 @@ jobs:
           packageManager: pnpm
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           environment: production
+          secrets: |
+            SECRET_TELEGRAM_API_TOKEN
+            SECRET_TELEGRAM_CHAT_ID
         env:
           SECRET_TELEGRAM_API_TOKEN: ${{ secrets.SECRET_TELEGRAM_API_TOKEN }}
           SECRET_TELEGRAM_CHAT_ID: ${{ secrets.SECRET_TELEGRAM_CHAT_ID }}
