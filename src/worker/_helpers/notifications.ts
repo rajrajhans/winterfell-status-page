@@ -148,32 +148,13 @@ export function getNotificationCount() {
 export function getNotifications(monitor: Monitor, data: NotifyCoreData, afterFetch?: () => void) {
   return [
     async () => {
-      if (typeof SECRET_SLACK_WEBHOOK_URL === 'undefined') {
-        return
-      }
-      await notifySlack(monitor, {
-        webhook: SECRET_SLACK_WEBHOOK_URL,
-        data,
-      })
-      afterFetch?.()
-    },
-    async () => {
       if (typeof SECRET_TELEGRAM_CHAT_ID === 'undefined' || typeof SECRET_TELEGRAM_API_TOKEN === 'undefined') {
+        console.log('Telegram notification not configured')
         return
       }
       await notifyTelegram(monitor, {
         chatId: SECRET_TELEGRAM_CHAT_ID,
         apiToken: SECRET_TELEGRAM_API_TOKEN,
-        data,
-      })
-      afterFetch?.()
-    },
-    async () => {
-      if (typeof SECRET_DISCORD_WEBHOOK_URL === 'undefined') {
-        return
-      }
-      await notifyDiscord(monitor, {
-        webhook: SECRET_DISCORD_WEBHOOK_URL,
         data,
       })
       afterFetch?.()
