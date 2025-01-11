@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { getCheckLocation } from '../_helpers/location'
 import { prepareData, upsertData } from '../_helpers/store'
 import { getNotificationCount, getNotifications } from '../_helpers/notifications'
@@ -23,8 +22,6 @@ export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
 
   const { kvData, allMonitors, uncheckMonitors, lastCheckedMonitorIds } = await prepareData(env)
   subrequests.required(2)
-  console.log('lastCheckedMonitorIds:', lastCheckedMonitorIds)
-  console.log('uncheckMonitors:', uncheckMonitors)
 
   for (const monitor of uncheckMonitors) {
     const notificationCount = getNotificationCount()

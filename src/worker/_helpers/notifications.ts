@@ -71,18 +71,20 @@ export interface INotifyTelegramOptions {
   data: NotifyCoreData
 }
 
+function escapeMarkdown(text: string) {
+  return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')
+}
+
 export async function notifyTelegram(monitor: Monitor, options: INotifyTelegramOptions) {
   const { chatId, apiToken, data } = options
 
   const monitorName = monitor.name || monitor.id
 
+  console.log('Sending Telegram notification for:', monitorName, 'with data:', data)
+
   const text = [
-    `
-      Monitor *${monitorName.replaceAll('-', '\\-')}* changed status to *${getOperationalLabel(data.operational)}* [${data.status}|${data.statusText}]
-    `.trim(),
-    `
-      ${data.operational ? '✅' : '❌'} \`${monitor.method ? monitor.method : 'GET'} ${monitor.url}\` \\- 👀 [Status Page](${config.settings.url})
-    `.trim(),
+    `Monitor *${escapeMarkdown(monitorName)}* changed status to *${getOperationalLabel(data.operational)}* \\[${data.status}\\|${data.statusText}\\]`,
+    `${data.operational ? '✅' : '❌'} \`${monitor.method ? monitor.method : 'GET'} ${escapeMarkdown(monitor.url)}\` \\- 👀 [Status Page](${escapeMarkdown(config.settings.url)})`,
   ].join('\n')
 
   const payload = new FormData()
@@ -91,10 +93,15 @@ export async function notifyTelegram(monitor: Monitor, options: INotifyTelegramO
   payload.append('text', text)
 
   const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendMessage`
-  return await fetch(telegramUrl, {
+  const response = await fetch(telegramUrl, {
     body: payload,
     method: 'POST',
   })
+
+  const responseText = await response.text()
+  console.log('Telegram notification response:', response.status, response.statusText, responseText)
+
+  return response
 }
 
 export interface INotifyDiscordOptions {

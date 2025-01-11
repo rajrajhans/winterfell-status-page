@@ -11,5 +11,6 @@ export default janna({
 }, {
   rules: {
     'style/jsx-indent': ['off'],
+    'no-console': 'off',
   },
 })
